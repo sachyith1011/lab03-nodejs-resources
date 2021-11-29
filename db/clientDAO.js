@@ -19,6 +19,36 @@ function findByUsername(username, callback) {
         }
     });
 }
+function findBySociety(society, callback){
+    const selectClient = (`select * from client where society like '${society}';`);
+    database.getResult(selectClient, function(err, rows) {
+        if (!err) {
+            callback(null, rows);
+        } else {
+            console.log(err);
+        }
+    });
+}
+function findByNumclient(num_client,callback){
+    const selectClient = (`select * from client where num_client like '${num_client}';`);
+    database.getResult(selectClient, function(err, rows) {
+        if (!err) {
+            callback(null, rows);
+        } else {
+            console.log(err);
+        }
+    });
+}
+function deleteClient(num_client,callback){
+    const deleteClient = (`delete from account where num_client like '${num_client}';`);
+    database.getResult(deleteClient, function(err, rows) {
+        if (!err) {
+            callback(null, rows);
+        } else {
+            console.log(err);
+        }
+    });
+}
 
 function cryptPassword(pass, callback) {
     //set the complexity of the salt generation
@@ -77,5 +107,4 @@ module.exports = {
     findByNumclient,
     createClient,
     deleteClient,
-    createInitialAccounts
 };

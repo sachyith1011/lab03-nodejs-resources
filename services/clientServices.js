@@ -1,5 +1,5 @@
 const { Client } = require('../models/entities');
-const clientDAO = require('../daos/clientDAO');
+const clientDAO = require('../db/clientDAO');
 const bcrypt = require("bcryptjs");
 
 const loginService = (typedUsername, typedPassword, callback) => {
@@ -10,7 +10,7 @@ const loginService = (typedUsername, typedPassword, callback) => {
         }
         if (rows.length == 0) {
             //the user is not in the DB
-            console.log("Unkown client, Please click to register");
+            console.log("Unknown client, Please click to register");
             callback(null, false, null);
         } else {
             //check if password match...
@@ -22,7 +22,7 @@ const loginService = (typedUsername, typedPassword, callback) => {
                 if (err2) {
                     throw err2;
                 } else if (!isMatch) {
-                    console.log("Password doesn't match!");
+                    console.log("Password doesn't match");
                     callback(null, true, null);
                 } else {
                     console.log("Password matches!");
@@ -73,15 +73,49 @@ const registerService = (client, callback) => {
     });
 };
 
-const searchService = function(callback) { //to be completed
+const searchService = function(callback) { 
+    clientDAO.find(function(err,rows){
+        if(err){
+            throw err;
+        }
+        if(rows.length==0){
+            console.log("No Clients");
+        }
+        else{
+            callback(null,rows);
+        }
+        
+    });
 };
 
 const searchNumclientService = function(num_client, callback) {
-    //to be completed
+    clientDAO.findByNumclient(function(err,rows){
+        if(err){
+            throw err;
+        }
+        if(rows.length==0){
+            console.log("No Clients");
+        }
+        else{
+            callback(null,rows);
+        }
+        
+    });
 };
 
 const deleteService = function(num_client, callback) {
-    //to be completed
+    clientDAO.deleteClient(function(err,rows){
+        if(err){
+            throw err;
+        }
+        if(rows.length==0){
+            console.log("No Clients");
+        }
+        else{
+            callback(null,rows);
+        }
+        
+    });
 };
 
 module.exports = {

@@ -1,6 +1,16 @@
 const express = require('express');
+const { use } = require('./apis/routes');
 //creating app
 const app = express();
+const session = require('express-session');
+app.use(session({secret: 'Juice'}));
+//creating an express session
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
+app.get('/',(req,res)=>{
+    res.sendFile('index.html',{root:__dirname});
+    });
 //make the app listen on port 
 const router = require('./apis/routes');
 app.use(router);
@@ -27,8 +37,8 @@ app.get('/register', (req, res) => {
 app.get('/login', (req, res) => {
     res.render('login'); 
    });
-   const port=process.argv[2] || process.env.PORT || 3000;
-   const server=app.listen(port,()=>{
-       console.log(`Cart app listening at http://localhost:${port}`);
-   });
+const port=process.argv[2] || process.env.PORT || 3000;
+const server=app.listen(port,()=>{
+    console.log(`Cart app listening at http://localhost:${port}`);
+});
    
