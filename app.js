@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
 //route for contacts
 app.get('/contacts', (req, res) => {
     res.render('contacts'); 
-   })
+   });
    //handling static HTML and EJS templates
 //route for contacts
 app.get('/contacts', (req, res) => {
