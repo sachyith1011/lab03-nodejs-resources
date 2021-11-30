@@ -7,6 +7,7 @@ app.use(session({secret: 'Juice'}));
 //creating an express session
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+//send the index html when receiving http
 app.use(express.static('public'));
 app.get('/',(req,res)=>{
     res.sendFile('index.html',{root:__dirname});
